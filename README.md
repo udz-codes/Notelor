@@ -3,6 +3,8 @@
 ## Notelor - Notepad Application: https://notelor.herokuapp.com/
 #### Technology Used : Python (Flask)
 
+##### NOTE: There are some problems with login and register, it works fine on localhost, but has problems in deployment.
+
 # Installation
 
 Clone Repository Process : https://help.github.com/en/articles/cloning-a-repository
