@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+
+{% block title %}Notelor - Sign Up{% endblock %}
+
+{% block main %}
+    <div class="col-10 col-md-3 text-light">
+        <h1 class="p-2 text-center text-warning" >Register</h1>
+        <form  action="/register" method="post" class="text-center">
+            <div class="form-group">
+                <input autofocus type="text" class="col-12 form-control border-warning text-warning" name="username" placeholder="Username" id="username"style="background-color: rgb(48, 48, 48); box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);" min="6" required>
+                <small id="notUser" style="display: none;">Username not available</small>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control border-warning text-warning" name="password" placeholder="Password" id="password" style="background-color: rgb(48, 48, 48); box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);" min="6" required>
+            </div>
+            <div class="form-group">
+                <input onkeyup="pass_validation()" type="password" class="form-control border-warning text-warning" name="confirmation" placeholder="Re-Enter Password" id="confirm" style="background-color: rgb(48, 48, 48); box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);" min="6" required>
+                <small id="notMatch" style="display: none;">Password does not match</small>
+            </div>
+            <button class="btn btn-outline-warning font-weight-bold col-12 mb-2" type="submit" id="sign">Sign Up</button>
+            <small>Already have a account ? <a class="text-warning" href="/login">Login</a></small>
+        </form>
+    </div>
+
+    <script>
+        function pass_validation(){
+            if(document.getElementById("password").value !=document.getElementById("confirm").value){
+                document.getElementById("password").classList.add("border-danger");
+                document.getElementById("confirm").classList.add("border-danger");
+
+                document.getElementById("notMatch").style.display = "inline";
+                document.getElementById("notMatch").classList.add("text-danger");
+            }
+            else if (document.getElementById("password").value == '' && document.getElementById("confirm").value == ''){
+                document.getElementById("password").classList.remove("border-danger");
+                document.getElementById("confirm").classList.remove("border-danger");
+                
+                document.getElementById("password").classList.add("border-success");
+                document.getElementById("confirm").classList.add("border-success");
+
+                document.getElementById("notMatch").style.display = "none";
+            }
+            else {
+                document.getElementById("password").classList.remove("border-danger");
+                document.getElementById("confirm").classList.remove("border-danger");    
+
+                document.getElementById("password").classList.add("border-success");
+                document.getElementById("confirm").classList.add("border-success");
+
+                document.getElementById("notMatch").style.display = "inline";
+                document.getElementById("notMatch").classList.remove("text-danger");
+                document.getElementById("notMatch").classList.add("text-success");
+
+                document.getElementById("notMatch").style.display = "none";
+            }
+        }
+    </script>
+{% endblock %}

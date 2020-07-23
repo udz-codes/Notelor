@@ -1,0 +1,176 @@
+{% extends "layout.html" %}
+
+{% block title %}Notelor{% endblock %}
+
+{% block main %}
+    <div class="page col-12 p-0 align-items-center justify-content-center" style="width: 100%; height: 100%; margin-top: 23vh;">
+        {% if not notes %}
+            <div class="col-12 d-flex flex-column align-items-center justify-content-center justify-content-md-around" style="height: 90%;">
+                <img class="col-8 col-md-6" src="../static/src/blank.svg">
+                <h1 class=" text-center text-muted mb-5">It's Empty.<br><small>Add new notes by clicking the button below.</small></h1>
+            </div>
+        {% else %}
+            <div class="col-12 p-md-0 d-flex align-items-start justify-content-start mb-5" >
+                <ul class="col-12 p-0 d-flex flex-row flex-wrap align-items-center justify-content-center mb-5">
+                    {% for row in notes %}
+                        <li class="card col-12 col-md-3 m-3 p-0" style="border-radius: 5px; background-color: rgb(58, 58, 58); color: white; border-color: rgba(26, 26, 26, 0); border-radius: 1em;">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12 mb-3">
+                                        <a class="col-12 d-flex flex-row justify-content-between align-items-center text-warning btn p-0 m-0 font-weight-bold" data-toggle="modal" data-target="#viewModal{{ row[4] }}" style="font-size: 0.9em">
+                                            <p class="card-title m-0 p-0"><b>{{row[1]}}</b></p>
+                                            <span><i class="fa fa-external-link" aria-hidden="true"></i></span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <pre class="card-text text-wrap text-white" style='height: 3em;  text-overflow: ellipsis; overflow: hidden; font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; white-space: pre-wrap;'>{{row[2]}}</pre>
+                                <div class="col-12 d-flex flex-row align-items-center justify-content-between p-0">
+                                    <div class="col-9 p-0">
+
+                                        <small style="font-size: 9pt; color: rgb(145, 145, 145);">Created: <span style="font-weight: lighter;">{{ row[3] }}</span></small>  
+                                        <!-- 2013-10-07 08:23:19 -->
+                                    </div>
+                                    <div class="col-3 d-flex flex-row justify-content-end align-items-center p-0">
+                                        
+                                        <button data-toggle="modal" data-target="#updateModal{{ row[4] }}" class="ml-2 p-2 btn btn-outline-secondary btn-sm rounded-circle d-flex align-items-center justify-content-center" style="height: 1.8em; width: 1.8em;">
+                                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                                        </button>
+                                        
+                                        <form action="/delete" method="post" class="p-0 m-0" id="deleteForm">
+                                            <button onclick="return ConfirmDelete();" type="submit" name="note_id" value="{{row[4]}}" class="ml-2 p-2 btn btn-outline-danger btn-sm rounded-circle d-flex align-items-center justify-content-center" style="height: 1.8em; width: 1.8em;">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                            </button>
+                                        </form>
+                                        
+                                        <script>
+                                            function ConfirmDelete()
+                                            {
+                                                var x = confirm("Are you sure you want to delete this note?");
+                                                
+                                                if (x){
+                                                    return true;
+                                                }
+                                                else{
+                                                    return false;
+                                                }
+                                            }
+                                        </script>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!-- Madal Area ------------------------------------------------------------------------- -->
+                        <div class="modal fade" id="updateModal{{ row[4] }}" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true" style="margin-top: 20vh;">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header" style="background-color: rgb(29, 29, 29); color: white; border: 0">
+                                  <h5 class="modal-title" id="updateModalLabel">Update Note</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true" class="text-white">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body" style="background-color: rgb(48, 48, 48); color: white;">
+                                    <form action="/update" method="post" class="m-0">
+                                        <div class="form-group">
+                                            <input autofocus value="{{ row[1] }}" type="text" class="form-control text-warning border-warning" name="updateHeading" placeholder="Heading" style="background-color: rgb(48, 48, 48); box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <textarea class="form-control text-warning border-warning" name="updateText" style="background-color: rgb(48, 48, 48); box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);" placeholder="Text" rows="8" required>{{ row[2] }}</textarea>
+                                        </div>
+                                        <input type="hidden" value="{{ row[4] }}" name="note_id" style="color: white; width: 0; height: 0; display: none;">
+                                        <button class="btn btn-warning font-weight-bold col-12" type="submit">Update</button>
+                                    </form>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade bd-example-modal-lg" id="viewModal{{ row[4] }}" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-lg modal-dialog-centered modal-dialog-scrollable" style="border-radius: 1em; background-color: rgba(29, 29, 29, 0); border-color: rgb(29, 29, 29);">
+                              <div class="modal-content" style="border-radius: 1em; border-color: rgb(29, 29, 29); background-color: rgb(29, 29, 29);">
+                                <div class="modal-body border-primary" style="max-height: calc(100vh - 300px); overflow-y: auto ;background-color: rgb(37, 37, 37); color: white; border-radius: 1em;">
+                                    <div class="col-12">
+                                        <p class="text-center text-warning font-weight-bold" style="font-size: large;">{{ row[1] }}</p>
+                                    </div>
+                                    <div class="col-12">
+                                        <pre class="text-white" style='font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; font-size: large; white-space: pre-wrap; line-height: 1.8; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word;'>{{ row[2] }}</pre>
+                                    </div>
+                                    <button class="col-2 btn btn-sm btn-outline-warning offset-10" type="button" class="close" data-dismiss="modal" aria-label="Close">Close</button>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                        <!-- Madal Area End ------------------------------------------------------------------------- -->
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <hr class="col-12 mt-0 mb-0 p-0" style="position: fixed; bottom: 10%; border-color: rgb(29, 29, 29);;">
+        
+        <div class="col-12 d-flex align-items-center justify-content-center text-white" style="height: 10%; position: fixed; background-color: rgb(48, 48, 48); bottom: 0;">
+            <a class="btn btn-warning font-weight-bold btn-lg ml-1 mr-1 p-1 pl-2 pr-2" data-toggle="modal" data-target="#exampleModal" style="color: rgb(48, 48, 48);">
+                Add Notes
+                <span class="ml-1">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                </span>
+            </a>
+        </div>
+
+
+        <!-- Madal Area ------------------------------------------------------------------------- -->
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content" style="background-color: rgba(29, 29, 29, 0);">
+                <div class="modal-header text-warning" style="background-color: rgb(39, 39, 39); border: 0">
+                  <h5 class="modal-title" id="exampleModalLabel">Add Note</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="text-white">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body" style="background-color: rgb(48, 48, 48)">
+                    <form action="/" method="post" class="m-0">
+                        <div class="form-group">
+                            <input autofocus type="text" class="form-control border-white text-white" name="heading" placeholder="Heading"
+                            style="background-color: rgb(48, 48, 48); box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);" required>
+                        </div>
+                        <div class="form-group mb-1">
+                            <textarea id="my-input" class="form-control border-white text-white" name="note-text" placeholder="Text..." rows="8"
+                            style="background-color: rgb(48, 48, 48); box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);" required></textarea>
+                        </div>
+                        <p class="text-warning" id='remainingC'></p>
+                        <button class="btn btn-outline-warning font-weight-bold col-12" type="submit">Add</button>
+                    </form>
+                </div>
+              </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function() {
+                var len = 0;
+
+                $( '#my-input' ).keyup(function(){
+                    len = this.value.length
+                    val = this.value
+                    words = 0
+
+                    if (len != 0){
+                        words = 1
+                    }
+
+                    for(i = 0; i < val.length; i++)
+                    {
+                        if (val[i] != ' ' && val[i-1] === ' ')
+                        {
+                            words = words + 1
+                        }
+                    }
+
+                    $( "#remainingC" ).html( len + " characters " + words + " word(s)." );
+                })
+            });
+        </script>
+    </div>
+{% endblock %}
