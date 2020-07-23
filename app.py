@@ -167,10 +167,10 @@ def login():
 
             if len(rows) != 1 or not check_password_hash(rows[0][2], request.form.get("password")):
                 return render_template("apology.html", apology = "Invalid username or password")
+            
             else:
                 session["user_id"] = rows[0][1]
-
-            return redirect("/")
+                return redirect("/")
 
 @app.route("/logout")
 @login_required
