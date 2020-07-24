@@ -1,9 +1,7 @@
 <img src="https://i.imgur.com/XNZPngy.pngg" alt="drawing" width="300"/>
 
 ## Notelor - Notepad Application: https://notelor.herokuapp.com/
-#### Technology Used : Python (Flask)
-
-##### NOTE: There are some problems with login and register, it works fine on localhost, but has problems in deployment.
+#### Technology Used : Python (Flask) and Sqlite3
 
 # Installation
 
