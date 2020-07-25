@@ -76,9 +76,10 @@
                                             <input autofocus value="{{ row[1] }}" type="text" class="form-control text-warning border-warning" name="updateHeading" placeholder="Heading" style="background-color: rgb(48, 48, 48); box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);" required>
                                         </div>
                                         <div class="form-group">
-                                            <textarea class="form-control text-warning border-warning" name="updateText" style="background-color: rgb(48, 48, 48); box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);" placeholder="Text" rows="8" required>{{ row[2] }}</textarea>
+                                            <textarea id="update-input" class="form-control text-warning border-warning" name="updateText" style="background-color: rgb(48, 48, 48); box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);" placeholder="Text" rows="8" required>{{ row[2] }}</textarea>
                                         </div>
                                         <input type="hidden" value="{{ row[4] }}" name="note_id" style="color: white; width: 0; height: 0; display: none;">
+                                        <p class="text-warning" id='remainingCharacters'></p>
                                         <button class="btn btn-warning font-weight-bold col-12" type="submit">Update</button>
                                     </form>
                                 </div>
@@ -157,6 +158,13 @@
                     var words = 0;
                     words = val.split(/\s+/).length;
                     $( "#remainingC" ).html( len + " characters " + words + " word(s)." );
+                })
+                $( '#update-input' ).keyup(function(){
+                    val = this.value.trim();
+                    len = val.length;
+                    var words = 0;
+                    words = val.split(/\s+/).length;
+                    $( "#remainingCharacters" ).html( len + " characters " + words + " word(s)." );
                 })
             });
         </script>
