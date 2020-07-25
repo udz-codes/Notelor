@@ -152,22 +152,10 @@
                 var len = 0;
 
                 $( '#my-input' ).keyup(function(){
-                    len = this.value.length
-                    val = this.value
-                    words = 0
-
-                    if (len != 0){
-                        words = 1
-                    }
-
-                    for(i = 0; i < val.length; i++)
-                    {
-                        if (val[i] != ' ' && val[i-1] === ' ')
-                        {
-                            words = words + 1
-                        }
-                    }
-
+                    val = this.value.trim();
+                    len = val.length;
+                    var words = 0;
+                    words = val.split(/\s+/).length;
                     $( "#remainingC" ).html( len + " characters " + words + " word(s)." );
                 })
             });
