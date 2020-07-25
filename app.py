@@ -18,6 +18,7 @@ Session(app)
 
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
+
 @app.route("/", methods = ["GET", "POST"])
 @login_required
 def main():
@@ -40,72 +41,60 @@ def main():
             database.commit()
 
             return redirect("/")
-
-    else:
         
-        db.execute("SELECT * FROM notes WHERE user_id = :user_id ORDER BY date DESC", {"user_id": session["user_id"]})
-        database.commit()
+    db.execute("SELECT * FROM notes WHERE user_id = :user_id ORDER BY date DESC", {"user_id": session["user_id"]})
+    database.commit()
 
-        notes = db.fetchall()
+    notes = db.fetchall()
 
-        return render_template("index.html", notes = notes)
+    return render_template("index.html", notes = notes)
 
 
-@app.route("/delete", methods=["GET","POST"])
+@app.route("/delete", methods=["POST"])
 @login_required
 def delete():
-
-    if request.method == "POST":
         
-        note_id = request.form.get("note_id")
+    note_id = request.form.get("note_id")
         
-        db.execute("DELETE FROM notes WHERE note_id = :note_id", {"note_id": note_id})
-        database.commit()
+    db.execute("DELETE FROM notes WHERE note_id = :note_id", {"note_id": note_id})
+    database.commit()
 
-        return redirect("/")
-    else:
-        return redirect("/")
+    return redirect("/")
 
-@app.route("/update", methods=["GET","POST"])
+
+@app.route("/update", methods=["POST"])
 @login_required
 def update():
-
-    if request.method == "POST":
         
-        if not request.form.get("updateHeading"):
-            return render_template("apology.html", apology = "Heading field can not be empty")
+    if not request.form.get("updateHeading"):
+        return render_template("apology.html", apology = "Heading field can not be empty")
         
-        elif not request.form.get("updateText"):
-            return render_template("apology.html", apology = "Notes body field can not be empty")
+    elif not request.form.get("updateText"):
+        return render_template("apology.html", apology = "Notes body field can not be empty")
         
-        elif not request.form.get("note_id"):
-            return render_template("apology.html", apology = "Unsuccessfull, try again.")
+    elif not request.form.get("note_id"):
+        return render_template("apology.html", apology = "Unsuccessfull, try again.")
 
-        else:
+    upHead = request.form.get("updateHeading")
+    upText = request.form.get("updateText")
+    note_id = request.form.get("note_id")
 
-            upHead = request.form.get("updateHeading")
-            upText = request.form.get("updateText")
-            note_id = request.form.get("note_id")
+    db.execute("UPDATE notes SET heading = :upHead, text = :upText WHERE note_id = :note_id AND user_id = :user_id", { "upHead": upHead, "upText": upText, "note_id": note_id ,"user_id": session["user_id"]} )
+    database.commit()
 
-            db.execute("UPDATE notes SET heading = :upHead, text = :upText WHERE note_id = :note_id AND user_id = :user_id",
-                { "upHead": upHead, "upText": upText, "note_id": note_id ,"user_id": session["user_id"]} )
-            database.commit()
+    return redirect("/")
 
-            return redirect("/")
-
-        db.execute("DELETE FROM notes WHERE note_id = :note_id", {"note_id": note_id})
-        database.commit()
-
-        return redirect("/")
 
 @app.route("/register", methods = ["GET","POST"])
 def register():
 
     if request.method == "GET":
+        
         if session.get("user_id") is not None:
             return redirect("/")
-        else:
-            return render_template("register.html")
+        
+        session.clear()
+        return render_template("register.html")
     
     elif request.method == "POST":
 
@@ -120,57 +109,58 @@ def register():
 
         elif request.form.get("password") != request.form.get("confirmation"):
             return render_template("apology.html", apology = "Password and Confirmation password do not match")
+
+        username = request.form.get("username")
+        password = request.form.get("password")
+
+        h = generate_password_hash(password)
+
+        db.execute("SELECT * FROM users WHERE username = :user", {"user" : username})
+        database.commit()
+
+        rows = db.fetchall()
+
+        if len(rows) == 0:
+            
+            db.execute("INSERT INTO users (username, hash) VALUES (:user, :hsh)", {"user": username, "hsh": h})
+            return redirect("/")
         
         else:
-
-            username = request.form.get("username")
-            password = request.form.get("password")
-
-            h = generate_password_hash(password)
-
-            db.execute("SELECT * FROM users WHERE username = :user", {"user" : username})
-            database.commit()
-
-            rows = db.fetchall()
-
-            if len(rows) == 0:
-                db.execute("INSERT INTO users (username, hash) VALUES (:user, :hsh)", {"user": username, "hsh": h})
-                return redirect("/login")
-            else:
-                return render_template("apology.html", apology = "User may already exist.")
+            
+            return render_template("apology.html", apology = "User may already exist.")
 
 
 @app.route("/login", methods = ["GET","POST"])
 def login():
 
     if request.method == "GET":
+        
         if session.get("user_id") is not None:
             return redirect("/")
-        else:
-            return render_template("login.html")
+        
+        session.clear()
+        return render_template("login.html")
 
     elif request.method == "POST":
+        
         if not request.form.get("username"):
             return render_template("apology.html", apology = "Username field can not be empty")
         
         elif not request.form.get("password"):
             return render_template("apology.html", apology = "Password field can not be empty")
 
-        else:
+        db.execute("SELECT * FROM users WHERE username = :user", {"user" : request.form.get("username")})
+        database.commit()
 
-            db.execute("SELECT * FROM users WHERE username = :user", {"user" : request.form.get("username")})
-            database.commit()
+        rows = db.fetchall()
 
-            rows = db.fetchall()
-
-            # print(rows)
-
-            if len(rows) != 1 or not check_password_hash(rows[0][2], request.form.get("password")):
-                return render_template("apology.html", apology = "Invalid username or password")
+        if len(rows) != 1 or not check_password_hash(rows[0][2], request.form.get("password")):
+            return render_template("apology.html", apology = "Invalid username or password")
             
-            else:
-                session["user_id"] = rows[0][1]
-                return redirect("/")
+        else:
+            session["user_id"] = rows[0][1]
+            return redirect("/")
+
 
 @app.route("/logout")
 @login_required

@@ -18,8 +18,8 @@
                                 <div class="row">
                                     <div class="col-12 mb-3">
                                         <a class="col-12 d-flex flex-row justify-content-between align-items-center text-warning btn p-0 m-0 font-weight-bold" data-toggle="modal" data-target="#viewModal{{ row[4] }}" style="font-size: 0.9em">
-                                            <p class="card-title m-0 p-0"><b>{{row[1]}}</b></p>
-                                            <span><i class="fa fa-external-link" aria-hidden="true"></i></span>
+                                            <p class="col-9 card-title m-0 p-0 text-truncate text-left"><b>{{row[1]}}</b></p>
+                                            <span class="col-3 text-right p-0 m-0"><i class="fa fa-external-link" aria-hidden="true"></i></span>
                                         </a>
                                     </div>
                                 </div>
@@ -61,8 +61,8 @@
                         </li>
 
                         <!-- Madal Area ------------------------------------------------------------------------- -->
-                        <div class="modal fade" id="updateModal{{ row[4] }}" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true" style="margin-top: 20vh;">
-                            <div class="modal-dialog">
+                        <div class="modal fade" id="updateModal{{ row[4] }}" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true" style="background-color: rgba(0, 0, 0, 0); backdrop-filter: blur(5px);">
+                            <div class="modal-dialog modal-dialog-centered">
                               <div class="modal-content">
                                 <div class="modal-header" style="background-color: rgb(29, 29, 29); color: white; border: 0">
                                   <h5 class="modal-title" id="updateModalLabel">Update Note</h5>
@@ -86,12 +86,12 @@
                             </div>
                         </div>
 
-                        <div class="modal fade bd-example-modal-lg" id="viewModal{{ row[4] }}" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-lg modal-dialog-centered modal-dialog-scrollable" style="border-radius: 1em; background-color: rgba(29, 29, 29, 0); border-color: rgb(29, 29, 29);">
-                              <div class="modal-content" style="border-radius: 1em; border-color: rgb(29, 29, 29); background-color: rgb(29, 29, 29);">
+                        <div class="modal fade bd-example-modal-lg" id="viewModal{{ row[4] }}" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true" style="background-color: rgba(0, 0, 0, 0); backdrop-filter: blur(5px);">
+                            <div class="modal-dialog modal-dialog-lg modal-dialog-centered modal-dialog-scrollable" style="border-radius: 1em; background-color: rgba(221, 188, 0, 0); border-color: rgb(29, 29, 29);">
+                              <div class="modal-content" style="border-radius: 1em; border-color: rgb(100, 100, 100); background-color: rgb(29, 29, 29);">
                                 <div class="modal-body border-primary" style="max-height: calc(100vh - 300px); overflow-y: auto ;background-color: rgb(37, 37, 37); color: white; border-radius: 1em;">
                                     <div class="col-12">
-                                        <p class="text-center text-warning font-weight-bold" style="font-size: large;">{{ row[1] }}</p>
+                                        <p class="text-center text-warning font-weight-bold" style="font-size: large; white-space: pre-wrap; line-height: 1.8; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word;">{{ row[1] }}</p>
                                     </div>
                                     <div class="col-12">
                                         <pre class="text-white" style='font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; font-size: large; white-space: pre-wrap; line-height: 1.8; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word;'>{{ row[2] }}</pre>
@@ -121,7 +121,7 @@
 
         <!-- Madal Area ------------------------------------------------------------------------- -->
 
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: rgba(0, 0, 0, 0); backdrop-filter: blur(5px);">
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content" style="background-color: rgba(29, 29, 29, 0);">
                 <div class="modal-header text-warning" style="background-color: rgb(39, 39, 39); border: 0">

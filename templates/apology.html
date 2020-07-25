@@ -3,10 +3,13 @@
 {% block title %}Apology{% endblock %}
 
 {% block main %}
-    <div class="col-12 col-md-6 d-flex flex-column justify-content-center align-items-center">
-        <img src="/static/src/error.svg" class="col-10 col-md-6"><br>
+    <div class="col-12 col-md-6 d-flex flex-column justify-content-around align-items-center" style="height: 80vh; margin-top: 12%; bottom: 0em;">
+        <img src="/static/src/error.svg" class="col-10 col-sm-8">
         <h1 class="apology text-warning text-center">
             {{ apology }}
-        </h1>
+        </h1><br>
+        <a href="/" class="btn btn-warning btn-lg font-weight-bold">
+            <i class="fa fa-angle-double-left" aria-hidden="true"></i> Go Back
+        </a>
     </div>
 {% endblock %}
