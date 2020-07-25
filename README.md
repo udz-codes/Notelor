@@ -30,5 +30,5 @@ Flask run
   <li><a href="https://github.com/SambhavG99" taget="_blank">SambhavG99</a></li>
 </ul>
 
-# Contributing
+# Contributing Rules
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
