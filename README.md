@@ -7,7 +7,7 @@
 
 Clone Repository Process : https://help.github.com/en/articles/cloning-a-repository
 
-### Make sure you have installed Python v3 or higher:
+### Make sure you have installed Python v3 (or higher) and below mentioned tools and packages:
 
 Python: https://www.python.org/downloads/
 Pip: https://pip.pypa.io/en/stable/installing/
