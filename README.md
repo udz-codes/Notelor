@@ -1,7 +1,7 @@
-<img src="https://i.imgur.com/XNZPngy.pngg" alt="drawing" width="300"/>
+<a href="https://notelor.herokuapp.com/"><img src="https://i.imgur.com/XNZPngy.pngg" alt="drawing" width="300"/></a>
 
-## Notelor - Notepad Application: https://notelor.herokuapp.com/
-#### Technology Used : Python (Flask) and Sqlite3
+## <a href="https://notelor.herokuapp.com/">Notelor - Notepad Application</a>
+#### <b>Technology Used :</b> Python (Flask) and Sqlite3
 
 # Installation
 
