@@ -25,5 +25,10 @@ Go to project directory and run following command in terminal.
 Flask run
 ```
 
+# Contributors
+<ul>
+  <li><a href="https://github.com/SambhavG99" taget="_blank">SambhavG99</a></li>
+</ul>
+
 # Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
