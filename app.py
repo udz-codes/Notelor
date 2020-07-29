@@ -3,6 +3,7 @@ from flask import Flask, render_template, redirect, request, session
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 from tempfile import mkdtemp
+import datetime
 
 from helpers import login_required
 
@@ -47,7 +48,23 @@ def main():
 
     notes = db.fetchall()
 
-    return render_template("index.html", notes = notes)
+    date = []
+    
+    for row in notes:
+
+        temp = datetime.datetime.strptime(row[3], '%Y-%m-%d %H:%M:%S')
+
+        y = temp.strftime("%Y")
+        m = temp.strftime("%B")
+        d = temp.strftime("%d")
+
+        i = f"{d}-{m}-{y}"
+
+        date.append(i)
+
+    return render_template("index.html", notes = notes, date = date)
+
+    # return render_template("index.html", notes = notes)
 
 
 @app.route("/delete", methods=["POST"])

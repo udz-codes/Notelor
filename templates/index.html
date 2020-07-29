@@ -12,32 +12,32 @@
         {% else %}
             <div class="col-12 p-md-0 d-flex align-items-start justify-content-start mb-5" >
                 <ul class="col-12 p-0 d-flex flex-row flex-wrap align-items-center justify-content-center mb-5">
-                    {% for row in notes %}
+                    {% for i in range(0, notes|length) %}
                         <li class="card col-12 col-md-3 m-3 p-0" style="border-radius: 5px; background-color: rgb(58, 58, 58); color: white; border-color: rgba(26, 26, 26, 0); border-radius: 1em;">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-12 mb-3">
-                                        <a class="col-12 d-flex flex-row justify-content-between align-items-center text-warning btn p-0 m-0 font-weight-bold" data-toggle="modal" data-target="#viewModal{{ row[4] }}" style="font-size: 0.9em">
-                                            <p class="col-9 card-title m-0 p-0 text-truncate text-left"><b>{{row[1]}}</b></p>
+                                        <a class="col-12 d-flex flex-row justify-content-between align-items-center text-warning btn p-0 m-0 font-weight-bold" data-toggle="modal" data-target="#viewModal{{ notes[i][4] }}" style="font-size: 0.9em">
+                                            <p class="col-9 card-title m-0 p-0 text-truncate text-left"><b>{{notes[i][1]}}</b></p>
                                             <span class="col-3 text-right p-0 m-0"><i class="fa fa-external-link" aria-hidden="true"></i></span>
                                         </a>
                                     </div>
                                 </div>
-                                <pre class="card-text text-wrap text-white" style='height: 3em;  text-overflow: ellipsis; overflow: hidden; font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; white-space: pre-wrap;'>{{row[2]}}</pre>
+                                <pre class="card-text text-wrap text-white" style='height: 3em;  text-overflow: ellipsis; overflow: hidden; font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; white-space: pre-wrap;'>{{notes[i][2]}}</pre>
                                 <div class="col-12 d-flex flex-row align-items-center justify-content-between p-0">
                                     <div class="col-9 p-0">
 
-                                        <small style="font-size: 9pt; color: rgb(145, 145, 145);">Created: <span style="font-weight: lighter;">{{ row[3] }}</span></small>  
+                                        <small style="font-size: 10pt; color: rgb(145, 145, 145);">{{ date[i] }}</small>  
                                         <!-- 2013-10-07 08:23:19 -->
                                     </div>
                                     <div class="col-3 d-flex flex-row justify-content-end align-items-center p-0">
                                         
-                                        <button data-toggle="modal" data-target="#updateModal{{ row[4] }}" class="ml-2 p-2 btn btn-outline-secondary btn-sm rounded-circle d-flex align-items-center justify-content-center" style="height: 1.8em; width: 1.8em;">
+                                        <button data-toggle="modal" data-target="#updateModal{{ notes[i][4] }}" class="ml-2 p-2 btn btn-outline-secondary btn-sm rounded-circle d-flex align-items-center justify-content-center" style="height: 1.8em; width: 1.8em;">
                                             <i class="fa fa-pencil" aria-hidden="true"></i>
                                         </button>
                                         
                                         <form action="/delete" method="post" class="p-0 m-0" id="deleteForm">
-                                            <button onclick="return ConfirmDelete();" type="submit" name="note_id" value="{{row[4]}}" class="ml-2 p-2 btn btn-outline-danger btn-sm rounded-circle d-flex align-items-center justify-content-center" style="height: 1.8em; width: 1.8em;">
+                                            <button onclick="return ConfirmDelete();" type="submit" name="note_id" value="{{notes[i][4]}}" class="ml-2 p-2 btn btn-outline-danger btn-sm rounded-circle d-flex align-items-center justify-content-center" style="height: 1.8em; width: 1.8em;">
                                                 <i class="fa fa-trash" aria-hidden="true"></i>
                                             </button>
                                         </form>
@@ -61,7 +61,7 @@
                         </li>
 
                         <!-- Madal Area ------------------------------------------------------------------------- -->
-                        <div class="modal fade" id="updateModal{{ row[4] }}" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true" style="background-color: rgba(0, 0, 0, 0); backdrop-filter: blur(5px);">
+                        <div class="modal fade" id="updateModal{{ notes[i][4] }}" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true" style="background-color: rgba(0, 0, 0, 0); backdrop-filter: blur(5px);">
                             <div class="modal-dialog modal-dialog-centered">
                               <div class="modal-content">
                                 <div class="modal-header" style="background-color: rgb(29, 29, 29); color: white; border: 0">
@@ -73,13 +73,13 @@
                                 <div class="modal-body" style="background-color: rgb(48, 48, 48); color: white;">
                                     <form action="/update" method="post" class="m-0">
                                         <div class="form-group">
-                                            <input autofocus value="{{ row[1] }}" type="text" class="form-control text-warning border-warning" name="updateHeading" placeholder="Heading" style="background-color: rgb(48, 48, 48); box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);" required>
+                                            <input autofocus value="{{ notes[i][1] }}" type="text" class="form-control text-warning border-warning" name="updateHeading" placeholder="Heading" style="background-color: rgb(48, 48, 48); box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);" required>
                                         </div>
                                         <div class="form-group">
-                                            <textarea id="update-input" class="form-control text-warning border-warning" name="updateText" style="background-color: rgb(48, 48, 48); box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);" placeholder="Text" rows="8" required>{{ row[2] }}</textarea>
+                                            <textarea id="updated-input" class="form-control text-warning border-warning" name="updateText" style="background-color: rgb(48, 48, 48); box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);" placeholder="Text" rows="8" required>{{ notes[i][2] }}</textarea>
                                         </div>
-                                        <input type="hidden" value="{{ row[4] }}" name="note_id" style="color: white; width: 0; height: 0; display: none;">
-                                        <p class="text-warning" id='remainingCharacters'></p>
+                                        <p class="text-warning" id='remainingU'></p>
+                                        <input type="hidden" value="{{ notes[i][4] }}" name="note_id" style="color: white; width: 0; height: 0; display: none;">
                                         <button class="btn btn-warning font-weight-bold col-12" type="submit">Update</button>
                                     </form>
                                 </div>
@@ -87,17 +87,33 @@
                             </div>
                         </div>
 
-                        <div class="modal fade bd-example-modal-lg" id="viewModal{{ row[4] }}" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true" style="background-color: rgba(0, 0, 0, 0); backdrop-filter: blur(5px);">
-                            <div class="modal-dialog modal-dialog-lg modal-dialog-centered modal-dialog-scrollable" style="border-radius: 1em; background-color: rgba(221, 188, 0, 0); border-color: rgb(29, 29, 29);">
-                              <div class="modal-content" style="border-radius: 1em; border-color: rgb(100, 100, 100); background-color: rgb(29, 29, 29);">
-                                <div class="modal-body border-primary" style="max-height: calc(100vh - 300px); overflow-y: auto ;background-color: rgb(37, 37, 37); color: white; border-radius: 1em;">
+                        <script>
+                            $(document).ready(function() {
+                                var len = 0;
+                
+                                $( '#updated-input' ).keyup(function(){
+                                    val = this.value.trim();
+                                    len = val.length;
+                                    var words = 0;
+                                    words = val.split(/\s+/).length;
+                                    $( "#remainingU" ).html( len + " characters " + words + " word(s)." );
+                                })
+                            });
+                        </script>
+
+                        <div class="modal fade" id="viewModal{{ notes[i][4] }}" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" style="background-color: rgba(0, 0, 0, 0); backdrop-filter: blur(5px);">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="border-radius: 1em; background-color: rgba(37, 37, 37, 0); border-color: rgb(29, 29, 29);">
+                              <div class="modal-content" style="border-radius: 1em; border-color: rgb(100, 100, 100); background-color: rgb(37, 37, 37); max-height: 80vh;">
+                                <div class="modal-body" style="overflow-y: auto; background-color: rgb(37, 37, 37); color: white; border-top-left-radius: 1em; border-top-right-radius: 1em;">
                                     <div class="col-12">
-                                        <p class="text-center text-warning font-weight-bold" style="font-size: large; white-space: pre-wrap; line-height: 1.8; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word;">{{ row[1] }}</p>
+                                        <p class="text-center text-warning font-weight-bold" style="font-size: large; white-space: pre-wrap; line-height: 1.8; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word;">{{ notes[i][1] }}</p>
                                     </div>
                                     <div class="col-12">
-                                        <pre class="text-white" style='font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; font-size: large; white-space: pre-wrap; line-height: 1.8; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word;'>{{ row[2] }}</pre>
+                                        <pre class="text-white" style='font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; font-size: large; white-space: pre-wrap; line-height: 1.8; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word;'>{{ notes[i][2] }}</pre>
                                     </div>
-                                    <button class="col-2 btn btn-sm btn-outline-warning offset-10" type="button" class="close" data-dismiss="modal" aria-label="Close">Close</button>
+                                </div>
+                                <div class="modal-footer" style="background-color: rgb(37, 37, 37); border-top: 0; border-bottom-left-radius: 1em; border-bottom-right-radius: 1em;">
+                                    <button class="col-2 btn btn-sm btn-outline-warning offset-10" type="button" class="close" data-dismiss="modal" aria-label="Close" style="position: sticky;">Close</button>
                                 </div>
                               </div>
                             </div>
@@ -158,13 +174,6 @@
                     var words = 0;
                     words = val.split(/\s+/).length;
                     $( "#remainingC" ).html( len + " characters " + words + " word(s)." );
-                })
-                $( '#update-input' ).keyup(function(){
-                    val = this.value.trim();
-                    len = val.length;
-                    var words = 0;
-                    words = val.split(/\s+/).length;
-                    $( "#remainingCharacters" ).html( len + " characters " + words + " word(s)." );
                 })
             });
         </script>
