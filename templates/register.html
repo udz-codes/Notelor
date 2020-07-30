@@ -4,6 +4,11 @@
 
 {% block main %}
     <div class="col-10 col-md-3 text-light">
+        {% if message %}
+        <div class="alert alert-danger" role="alert">
+            {{ message }}
+        </div>
+        {% endif %}
         <h1 class="p-2 text-center text-warning" >Register</h1>
         <form  action="/register" method="post" class="text-center">
             <div class="form-group">

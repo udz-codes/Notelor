@@ -116,16 +116,16 @@ def register():
     elif request.method == "POST":
 
         if not request.form.get("username"):
-            return render_template("apology.html", apology = "Username field can not be empty")
+            return render_template("register.html", message = "Username field can not be empty")
 
         elif not request.form.get("password"):
-            return render_template("apology.html", apology = "Password field can not be empty")
+            return render_template("register.html", message = "Password field can not be empty")
 
         elif not request.form.get("confirmation"):
-            return render_template("apology.html", apology = "Please confirm password")
+            return render_template("register.html", message = "Please confirm password")
 
         elif request.form.get("password") != request.form.get("confirmation"):
-            return render_template("apology.html", apology = "Password and Confirmation password do not match")
+            return render_template("register.html", message = "Password and Confirmation password do not match")
 
         username = request.form.get("username")
         password = request.form.get("password")
@@ -144,7 +144,7 @@ def register():
         
         else:
             
-            return render_template("apology.html", apology = "User may already exist.")
+            return render_template("register.html", message = "User may already exist.")
 
 
 @app.route("/login", methods = ["GET","POST"])
@@ -161,10 +161,10 @@ def login():
     elif request.method == "POST":
         
         if not request.form.get("username"):
-            return render_template("apology.html", apology = "Username field can not be empty")
+            return render_template("login.html", message = "Username field can not be empty")
         
         elif not request.form.get("password"):
-            return render_template("apology.html", apology = "Password field can not be empty")
+            return render_template("login.html", message = "Password field can not be empty")
 
         db.execute("SELECT * FROM users WHERE username = :user", {"user" : request.form.get("username")})
         database.commit()
@@ -172,7 +172,7 @@ def login():
         rows = db.fetchall()
 
         if len(rows) != 1 or not check_password_hash(rows[0][2], request.form.get("password")):
-            return render_template("apology.html", apology = "Invalid username or password")
+            return render_template("login.html", message = "Invalid username or password")
             
         else:
             session["user_id"] = rows[0][1]
