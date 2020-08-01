@@ -61,22 +61,22 @@
                         </li>
 
                         <!-- Madal Area ------------------------------------------------------------------------- -->
-                        <div class="modal fade" id="updateModal{{ notes[i][4] }}" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true" style="background-color: rgba(0, 0, 0, 0); backdrop-filter: blur(5px);">
+                        <div class="modal fade" id="updateModal{{ notes[i][4] }}" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true" style="background-color: rgba(0, 0, 0, 0.247); backdrop-filter: blur(5px);">
                             <div class="modal-dialog modal-dialog-centered">
-                              <div class="modal-content">
-                                <div class="modal-header" style="background-color: rgb(29, 29, 29); color: white; border: 0">
+                              <div class="modal-content" style="border-radius: 1em; background-color: rgba(0, 0, 0, 0);">
+                                <div class="modal-header text-warning" style="background-color: rgb(37, 37, 37); border: 0; border-top-left-radius: 1em; border-top-right-radius: 1em;">
                                   <h5 class="modal-title" id="updateModalLabel">Update Note</h5>
                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true" class="text-white">&times;</span>
                                   </button>
                                 </div>
-                                <div class="modal-body" style="background-color: rgb(48, 48, 48); color: white;">
+                                <div class="modal-body" style="background-color: rgb(48, 48, 48); color: white; border-bottom-left-radius: 1em; border-bottom-right-radius: 1em;">
                                     <form action="/update" method="post" class="m-0">
                                         <div class="form-group">
-                                            <input autofocus value="{{ notes[i][1] }}" type="text" class="form-control text-warning border-warning" name="updateHeading" placeholder="Heading" style="background-color: rgb(48, 48, 48); box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);" required>
+                                            <input autofocus value="{{ notes[i][1] }}" type="text" class="form-control text-warning" name="updateHeading" placeholder="Heading" style="background-color: rgb(59, 59, 59); box-shadow: 0px 0px 0px rgba(0, 0, 0, 0); border: none; border-radius: 1em;" required>
                                         </div>
                                         <div class="form-group">
-                                            <textarea id="updated-input" class="form-control text-warning border-warning" name="updateText" style="background-color: rgb(48, 48, 48); box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);" placeholder="Text" rows="8" required>{{ notes[i][2] }}</textarea>
+                                            <textarea id="updated-input" class="form-control text-warning" name="updateText" style="background-color: rgb(59, 59, 59); box-shadow: 0px 0px 0px rgba(0, 0, 0, 0); border: none; border-radius: 1em;" placeholder="Text" rows="8" required>{{ notes[i][2] }}</textarea>
                                         </div>
                                         <p class="text-warning" id='remainingU'></p>
                                         <input type="hidden" value="{{ notes[i][4] }}" name="note_id" style="color: white; width: 0; height: 0; display: none;">
@@ -138,27 +138,27 @@
 
         <!-- Madal Area ------------------------------------------------------------------------- -->
 
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: rgba(0, 0, 0, 0); backdrop-filter: blur(5px);">
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: rgba(0, 0, 0, 0.247); backdrop-filter: blur(5px);">
             <div class="modal-dialog modal-dialog-centered">
-              <div class="modal-content" style="background-color: rgba(29, 29, 29, 0);">
-                <div class="modal-header text-warning" style="background-color: rgb(39, 39, 39); border: 0">
+              <div class="modal-content" style="background-color: rgba(29, 29, 29, 0); border-radius: 1em">
+                <div class="modal-header text-warning" style="background-color: rgb(37, 37, 37); border: 0; border-top-left-radius: 1em; border-top-right-radius: 1em;">
                   <h5 class="modal-title" id="exampleModalLabel">Add Note</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true" class="text-white">&times;</span>
                   </button>
                 </div>
-                <div class="modal-body" style="background-color: rgb(48, 48, 48)">
+                <div class="modal-body" style="background-color: rgb(48, 48, 48); border-bottom-left-radius: 1em; border-bottom-right-radius: 1em;">
                     <form action="/" method="post" class="m-0">
                         <div class="form-group">
-                            <input autofocus type="text" class="form-control border-white text-white" name="heading" placeholder="Heading"
-                            style="background-color: rgb(48, 48, 48); box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);" required>
+                            <input autofocus type="text" class="form-control text-white" name="heading" placeholder="Heading"
+                            style="background-color: rgb(59, 59, 59); box-shadow: 0px 0px 0px rgba(0, 0, 0, 0); border: none; border-radius: 1em;" required>
                         </div>
                         <div class="form-group mb-1">
-                            <textarea id="my-input" class="form-control border-white text-white" name="note-text" placeholder="Text..." rows="8"
-                            style="background-color: rgb(48, 48, 48); box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);" required></textarea>
+                            <textarea id="my-input" class="form-control text-white" name="note-text" placeholder="Text..." rows="8"
+                            style="background-color: rgb(59, 59, 59); box-shadow: 0px 0px 0px rgba(0, 0, 0, 0); border: none; border-radius: 1em;" required></textarea>
                         </div>
                         <p class="text-warning" id='remainingC'></p>
-                        <button class="btn btn-outline-warning font-weight-bold col-12" type="submit">Add</button>
+                        <button class="btn btn-warning font-weight-bold col-12" type="submit">Add</button>
                     </form>
                 </div>
               </div>
