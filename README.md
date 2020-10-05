@@ -29,6 +29,7 @@ Flask run
 # Contributors
 <ul>
   <li><a href="https://github.com/SambhavG99" taget="_blank">SambhavG99</a></li>
+  <li><a href="https://github.com/zendamacf" taget="_blank">Zendamacf</a></li>
 </ul>
 
 # Contributing Rules
