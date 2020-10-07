@@ -91,7 +91,7 @@
                             $(document).ready(function() {
                                 var len = 0;
                 
-                                $( '#updated-input' ).keyup(function(){
+                                $( '#updated-input' ).on('keyup paste input', function(){
                                     val = this.value.trim();
                                     len = val.length;
                                     var words = 0;
