@@ -6,7 +6,7 @@
     <div class="page col-12 p-0 align-items-center justify-content-center" style="width: 100%; height: 100%; margin-top: 23vh;">
         {% if not notes %}
             <div class="col-12 d-flex flex-column align-items-center justify-content-center justify-content-md-around" style="height: 90%;">
-                <img class="col-8 col-md-6" src="../static/src/blank.svg">
+                <img class="col-8 col-md-6" src="{{ url_for('static', filename='blank.svg') }}">
                 <h1 class=" text-center text-muted mb-5">It's Empty.<br><small>Add new notes by clicking the button below.</small></h1>
             </div>
         {% else %}
@@ -27,26 +27,26 @@
                                 <div class="col-12 d-flex flex-row align-items-center justify-content-between p-0">
                                     <div class="col-9 p-0">
 
-                                        <small style="font-size: 10pt; color: rgb(145, 145, 145);">{{ date[i] }}</small>  
+                                        <small style="font-size: 10pt; color: rgb(145, 145, 145);">{{ date[i] }}</small>
                                         <!-- 2013-10-07 08:23:19 -->
                                     </div>
                                     <div class="col-3 d-flex flex-row justify-content-end align-items-center p-0">
-                                        
+
                                         <button data-toggle="modal" data-target="#updateModal{{ notes[i][4] }}" class="ml-2 p-2 btn btn-outline-secondary btn-sm rounded-circle d-flex align-items-center justify-content-center" style="height: 1.8em; width: 1.8em;">
                                             <i class="fa fa-pencil" aria-hidden="true"></i>
                                         </button>
-                                        
+
                                         <form action="/delete" method="post" class="p-0 m-0" id="deleteForm">
                                             <button onclick="return ConfirmDelete();" type="submit" name="note_id" value="{{notes[i][4]}}" class="ml-2 p-2 btn btn-outline-danger btn-sm rounded-circle d-flex align-items-center justify-content-center" style="height: 1.8em; width: 1.8em;">
                                                 <i class="fa fa-trash" aria-hidden="true"></i>
                                             </button>
                                         </form>
-                                        
+
                                         <script>
                                             function ConfirmDelete()
                                             {
                                                 var x = confirm("Are you sure you want to delete this note?");
-                                                
+
                                                 if (x){
                                                     return true;
                                                 }
@@ -60,7 +60,7 @@
                             </div>
                         </li>
 
-                        <!-- Madal Area ------------------------------------------------------------------------- -->
+                        <!-- Modal Area ------------------------------------------------------------------------- -->
                         <div class="modal fade" id="updateModal{{ notes[i][4] }}" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true" style="background-color: rgba(0, 0, 0, 0.247); backdrop-filter: blur(5px);">
                             <div class="modal-dialog modal-dialog-centered">
                               <div class="modal-content" style="border-radius: 1em; background-color: rgba(0, 0, 0, 0);">
@@ -90,7 +90,7 @@
                         <script>
                             $(document).ready(function() {
                                 var len = 0;
-                
+
                                 $( '#updated-input' ).on('keyup paste input', function(){
                                     val = this.value.trim();
                                     len = val.length;
@@ -125,7 +125,7 @@
         {% endif %}
 
         <hr class="col-12 mt-0 mb-0 p-0" style="position: fixed; bottom: 10%; border-color: rgb(29, 29, 29);;">
-        
+
         <div class="col-12 d-flex align-items-center justify-content-center text-white" style="height: 10%; position: fixed; background-color: rgb(48, 48, 48); bottom: 0;">
             <a class="btn btn-warning font-weight-bold btn-lg ml-1 mr-1 p-1 pl-2 pr-2" data-toggle="modal" data-target="#exampleModal" style="color: rgb(48, 48, 48);">
                 Add Notes
