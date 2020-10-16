@@ -34,3 +34,5 @@ Flask run
 
 # Contributing Rules
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Contributor's name will be added to README.md as a Thank Ypu.
