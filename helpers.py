@@ -1,4 +1,4 @@
-from flask import redirect, request, session
+from flask import redirect, session
 from functools import wraps
 
 def login_required(f):
@@ -9,5 +9,5 @@ def login_required(f):
             return redirect("/login")
         else:
             return f(*args, **kwargs)
-    
+
     return decorated_function

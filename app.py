@@ -7,7 +7,7 @@ import datetime
 
 from helpers import login_required
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='./static/src')
 
 database = sqlite3.connect("notelor.db", check_same_thread = False)
 db = database.cursor()
@@ -42,14 +42,14 @@ def main():
             database.commit()
 
             return redirect("/")
-        
+
     db.execute("SELECT * FROM notes WHERE user_id = :user_id ORDER BY date DESC", {"user_id": session["user_id"]})
     database.commit()
 
     notes = db.fetchall()
 
     date = []
-    
+
     for row in notes:
 
         temp = datetime.datetime.strptime(row[3], '%Y-%m-%d %H:%M:%S')
@@ -70,9 +70,9 @@ def main():
 @app.route("/delete", methods=["POST"])
 @login_required
 def delete():
-        
+
     note_id = request.form.get("note_id")
-        
+
     db.execute("DELETE FROM notes WHERE note_id = :note_id", {"note_id": note_id})
     database.commit()
 
@@ -82,13 +82,13 @@ def delete():
 @app.route("/update", methods=["POST"])
 @login_required
 def update():
-        
+
     if not request.form.get("updateHeading"):
         return render_template("apology.html", apology = "Heading field can not be empty")
-        
+
     elif not request.form.get("updateText"):
         return render_template("apology.html", apology = "Notes body field can not be empty")
-        
+
     elif not request.form.get("note_id"):
         return render_template("apology.html", apology = "Unsuccessfull, try again.")
 
@@ -106,13 +106,13 @@ def update():
 def register():
 
     if request.method == "GET":
-        
+
         if session.get("user_id") is not None:
             return redirect("/")
-        
+
         session.clear()
         return render_template("register.html")
-    
+
     elif request.method == "POST":
 
         if not request.form.get("username"):
@@ -138,12 +138,12 @@ def register():
         rows = db.fetchall()
 
         if len(rows) == 0:
-            
+
             db.execute("INSERT INTO users (username, hash) VALUES (:user, :hsh)", {"user": username, "hsh": h})
             return redirect("/")
-        
+
         else:
-            
+
             return render_template("register.html", message = "User may already exist.")
 
 
@@ -151,18 +151,18 @@ def register():
 def login():
 
     if request.method == "GET":
-        
+
         if session.get("user_id") is not None:
             return redirect("/")
-        
+
         session.clear()
         return render_template("login.html")
 
     elif request.method == "POST":
-        
+
         if not request.form.get("username"):
             return render_template("login.html", message = "Username field can not be empty")
-        
+
         elif not request.form.get("password"):
             return render_template("login.html", message = "Password field can not be empty")
 
@@ -173,7 +173,7 @@ def login():
 
         if len(rows) != 1 or not check_password_hash(rows[0][2], request.form.get("password")):
             return render_template("login.html", message = "Invalid username or password")
-            
+
         else:
             session["user_id"] = rows[0][1]
             return redirect("/")
@@ -182,7 +182,7 @@ def login():
 @app.route("/logout")
 @login_required
 def logout():
-    
+
     session.clear()
 
     return redirect("/")
